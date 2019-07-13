@@ -1,12 +1,13 @@
 package main
 
 import (
-	"distfuzzmon/server/types"
 	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"distfuzzmon/server/types"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
