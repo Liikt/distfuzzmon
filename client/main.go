@@ -30,14 +30,14 @@ func main() {
 		})
 	})
 
-	client.RegisterClient()
+	client.BasicAPIRequest("registerclient", true)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
 		fmt.Println("\n[~] Caught Ctrl+C. Cleaning up the client.")
-		client.DeregisterClient()
+		client.BasicAPIRequest("deregisterclient", true)
 		os.Exit(0)
 	}()
 	fmt.Println("[+] Starting server on 31338")
