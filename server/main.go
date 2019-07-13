@@ -41,6 +41,7 @@ func main() {
 		r.Get("/deregisterclient/", clienthandeling.DeregisterClient)
 		r.Get("/enableclient/", clienthandeling.EnableClient)
 		r.Get("/disableclient/", clienthandeling.DisableClient)
+		r.Get("/sync/{target}/", clientsync.Sync)
 		r.Post("/dropfile/{target}/{fuzzer}/", clientsync.DropFile)
 	})
 

@@ -7,6 +7,10 @@ type DropFileRequest struct {
 	Content  string `json:"content"`
 }
 
+type ClientResponse struct {
+	Message string `json:"msg"`
+}
+
 var (
 	// RegisteredClients is a map that holds the information of all registered clients
 	RegisteredClients clientMap
