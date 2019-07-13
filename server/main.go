@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"distfuzzmon/server/clientHandeling"
+	"distfuzzmon/server/clienthandeling"
 	"distfuzzmon/server/types"
 
 	"github.com/go-chi/chi"
@@ -29,10 +29,10 @@ func main() {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("[-] Nothing to see here. Please move on."))
 		})
-		r.Get("/register_client/", clientHandeling.RegisterClient)
-		r.Get("/deregister_client/", clientHandeling.DeregisterClient)
-		r.Get("/enable_client/", clientHandeling.EnableClient)
-		r.Get("/disable_client/", clientHandeling.DisableClient)
+		r.Get("/register_client/", clienthandeling.RegisterClient)
+		r.Get("/deregister_client/", clienthandeling.DeregisterClient)
+		r.Get("/enable_client/", clienthandeling.EnableClient)
+		r.Get("/disable_client/", clienthandeling.DisableClient)
 	})
 
 	fmt.Println("[+] Starting server on 31337")

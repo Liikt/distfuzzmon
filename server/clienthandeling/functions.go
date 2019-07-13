@@ -1,4 +1,4 @@
-package clientHandeling
+package clienthandeling
 
 import (
 	"fmt"
@@ -7,6 +7,7 @@ import (
 	"distfuzzmon/server/types"
 )
 
+// RegisterClient will register a client matching the X-Real-IP header
 func RegisterClient(w http.ResponseWriter, r *http.Request) {
 	if _, ok := types.RegisteredClients[r.RemoteAddr]; ok {
 		fmt.Printf("[-] Client from %s is already registered\n", r.RemoteAddr)
@@ -16,6 +17,7 @@ func RegisterClient(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// DeregisterClient will remove the client matching the X-Real-IP header
 func DeregisterClient(w http.ResponseWriter, r *http.Request) {
 	if _, ok := types.RegisteredClients[r.RemoteAddr]; ok {
 		delete(types.RegisteredClients, r.RemoteAddr)
@@ -25,6 +27,7 @@ func DeregisterClient(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//EnableClient will enable the client matching the X-Real-IP header
 func EnableClient(w http.ResponseWriter, r *http.Request) {
 	if data, ok := types.RegisteredClients[r.RemoteAddr]; !ok {
 		fmt.Printf("[-] Client from %s was never registered\n", r.RemoteAddr)
@@ -34,6 +37,7 @@ func EnableClient(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("[+] Successfully enabled", r.RemoteAddr)
 }
 
+//DisableClient will disable the client matching the X-Real-IP header
 func DisableClient(w http.ResponseWriter, r *http.Request) {
 	if data, ok := types.RegisteredClients[r.RemoteAddr]; !ok {
 		fmt.Printf("[-] Client from %s was never registered\n", r.RemoteAddr)
