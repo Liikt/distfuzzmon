@@ -15,7 +15,7 @@ import (
 
 func registerClient(w http.ResponseWriter, r *http.Request) {
 	if _, ok := types.RegisteredClients[r.RemoteAddr]; ok {
-		fmt.Printf("[~] Client from %s is already registered\n", r.RemoteAddr)
+		fmt.Printf("[-] Client from %s is already registered\n", r.RemoteAddr)
 	} else {
 		types.RegisteredClients[r.RemoteAddr] = true
 		fmt.Println("[+] Registered new clients on", r.RemoteAddr)
@@ -27,13 +27,13 @@ func deregisterClient(w http.ResponseWriter, r *http.Request) {
 		delete(types.RegisteredClients, r.RemoteAddr)
 		fmt.Println("[+] Successfully deregistered", r.RemoteAddr)
 	} else {
-		fmt.Printf("[~] Client from %s was never registered\n", r.RemoteAddr)
+		fmt.Printf("[-] Client from %s was never registered\n", r.RemoteAddr)
 	}
 }
 
 func enableClient(w http.ResponseWriter, r *http.Request) {
 	if data, ok := types.RegisteredClients[r.RemoteAddr]; !ok {
-		fmt.Printf("[~] Client from %s was never registered\n", r.RemoteAddr)
+		fmt.Printf("[-] Client from %s was never registered\n", r.RemoteAddr)
 	} else if data {
 		types.RegisteredClients[r.RemoteAddr] = true
 	}
@@ -42,7 +42,7 @@ func enableClient(w http.ResponseWriter, r *http.Request) {
 
 func disableClient(w http.ResponseWriter, r *http.Request) {
 	if data, ok := types.RegisteredClients[r.RemoteAddr]; !ok {
-		fmt.Printf("[~] Client from %s was never registered\n", r.RemoteAddr)
+		fmt.Printf("[-] Client from %s was never registered\n", r.RemoteAddr)
 	} else if data {
 		types.RegisteredClients[r.RemoteAddr] = false
 	}
