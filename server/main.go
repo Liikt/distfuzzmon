@@ -8,16 +8,24 @@ import (
 	"syscall"
 
 	"distfuzzmon/server/clienthandeling"
+	"distfuzzmon/server/clientsync"
 	"distfuzzmon/server/types"
+	"distfuzzmon/server/utils"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
 
 func main() {
-	r := chi.NewRouter()
 	types.SetupGlobals()
+	if exists, err := utils.PathExists("sync_dir"); err != nil {
+		fmt.Println("[-] Something went wrong while stating the sync dir")
+		os.Exit(1)
+	} else if !exists {
+		os.Mkdir("sync_dir", 0755)
+	}
 
+	r := chi.NewRouter()
 	r.Use(middleware.RealIP)
 	// r.Use(middleware.Logger)
 
@@ -29,10 +37,11 @@ func main() {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("[-] Nothing to see here. Please move on."))
 		})
-		r.Get("/register_client/", clienthandeling.RegisterClient)
-		r.Get("/deregister_client/", clienthandeling.DeregisterClient)
-		r.Get("/enable_client/", clienthandeling.EnableClient)
-		r.Get("/disable_client/", clienthandeling.DisableClient)
+		r.Get("/registerclient/", clienthandeling.RegisterClient)
+		r.Get("/deregisterclient/", clienthandeling.DeregisterClient)
+		r.Get("/enableclient/", clienthandeling.EnableClient)
+		r.Get("/disableclient/", clienthandeling.DisableClient)
+		r.Post("/dropfile/{target}/{fuzzer}/", clientsync.DropFile)
 	})
 
 	fmt.Println("[+] Starting server on 31337")
