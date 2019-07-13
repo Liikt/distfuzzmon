@@ -28,9 +28,11 @@ func main() {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("{\"msg\": \"Nothing to see here. Please move on\"}"))
 		})
+		r.Post("/startfuzzing/{target}/")
 	})
 
 	client.BasicAPIRequest("registerclient", true)
+	go client.StartClient()
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)

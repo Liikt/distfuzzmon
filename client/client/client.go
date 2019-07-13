@@ -1,13 +1,14 @@
 package client
 
 import (
-	"distfuzzmon/client/types"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"distfuzzmon/client/globals"
+	"distfuzzmon/client/types"
 )
 
 // BasicAPIRequest will make a basic API request to the server
@@ -50,4 +51,20 @@ func BasicAPIRequest(path string, exit bool) {
 			os.Exit(1)
 		}
 	}
+}
+
+// StartClient will start the client activities
+func StartClient() {
+	ticker := time.NewTicker(30 * time.Minute)
+	for {
+		select {
+		case <-ticker.C:
+			// TODO: Stop the fuzzer
+			sendFilesToServer()
+		}
+	}
+}
+
+func sendFilesToServer() {
+
 }

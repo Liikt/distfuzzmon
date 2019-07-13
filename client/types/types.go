@@ -4,3 +4,9 @@ package types
 type ServerRespose struct {
 	Message string `json:"msg"`
 }
+
+type Fuzzjob struct {
+	Target      string `json:"target"`
+	Fuzzer      string `json:"fuzzer"`
+	FullCommand string `json:"command"`
+}
