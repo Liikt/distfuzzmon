@@ -53,6 +53,11 @@ func BasicAPIRequest(path string, exit bool) {
 	}
 }
 
+// StartFuzzjob is the endpoint to start a new fuzzing job
+func StartFuzzjob(w http.ResponseWriter, r *http.Request) {
+
+}
+
 // StartClient will start the client activities
 func StartClient() {
 	ticker := time.NewTicker(30 * time.Minute)

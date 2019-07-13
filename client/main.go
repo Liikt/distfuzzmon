@@ -28,7 +28,7 @@ func main() {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("{\"msg\": \"Nothing to see here. Please move on\"}"))
 		})
-		r.Post("/startfuzzing/{target}/")
+		r.Post("/startfuzzing/{target}/", client.StartFuzzjob)
 	})
 
 	client.BasicAPIRequest("registerclient", true)
