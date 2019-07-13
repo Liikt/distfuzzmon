@@ -1,0 +1,16 @@
+Client:
+    ☐ The client should be able to handle afl
+        Later down the road has to have more options for other fuzzers
+    ☐ Recieve fuzzjobs
+    ☐ Send queues and crashes to the server
+        crashes are possibly included in the queue as well?
+        ☐ get all files
+        ☐ base64 encode them
+        ☐ send them to the server
+    ☐ write a webfrontend that displays statistics of the running fuzzers of the client
+
+Server:
+    ☐ For now automatically send a few fuzz jobs to the client
+    ☐ Seperate the types package into types and globals
+    ☐ write a webfrontend that can manage the clients
+        for statistics it should redirect to the fuzzing instance itself
