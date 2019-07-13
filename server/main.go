@@ -31,6 +31,24 @@ func deregisterClient(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func enableClient(w http.ResponseWriter, r *http.Request) {
+	if data, ok := types.RegisteredClients[r.RemoteAddr]; !ok {
+		fmt.Printf("[~] Client from %s was never registered\n", r.RemoteAddr)
+	} else if data {
+		types.RegisteredClients[r.RemoteAddr] = true
+	}
+	fmt.Println("[+] Successfully enabled", r.RemoteAddr)
+}
+
+func disableClient(w http.ResponseWriter, r *http.Request) {
+	if data, ok := types.RegisteredClients[r.RemoteAddr]; !ok {
+		fmt.Printf("[~] Client from %s was never registered\n", r.RemoteAddr)
+	} else if data {
+		types.RegisteredClients[r.RemoteAddr] = false
+	}
+	fmt.Println("[+] Successfully disabled", r.RemoteAddr)
+}
+
 func main() {
 	r := chi.NewRouter()
 	types.SetupGlobals()
@@ -48,6 +66,8 @@ func main() {
 		})
 		r.Get("/register_client/", registerClient)
 		r.Get("/deregister_client/", deregisterClient)
+		r.Get("/enable_client/", enableClient)
+		r.Get("/disable_client/", disableClient)
 	})
 
 	fmt.Println("[+] Starting server on 31337")
