@@ -69,7 +69,7 @@ func Sync(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("{\"msg\": \"Ok!\"}"))
 
 	for _, fuzzerDir := range fuzzers {
-		// Maybe turn this into goroutines later
+		// TODO: Maybe turn this into goroutines later
 		sendFiles(filepath.Join(targetPath, fuzzerDir.Name()), ip, target)
 	}
 
