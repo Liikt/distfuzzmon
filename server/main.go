@@ -4,6 +4,9 @@ import (
 	"distfuzzmon/server/types"
 	"fmt"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -47,5 +50,12 @@ func main() {
 	})
 
 	fmt.Println("[+] Starting server on 31337")
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\n[~] Caught Ctrl+C. Exiting the server now.")
+		os.Exit(0)
+	}()
 	http.ListenAndServe(":31337", r)
 }
