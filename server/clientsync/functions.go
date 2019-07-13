@@ -72,6 +72,8 @@ func Sync(w http.ResponseWriter, r *http.Request) {
 		// Maybe turn this into goroutines later
 		sendFiles(filepath.Join(targetPath, fuzzerDir.Name()), ip, target)
 	}
+
+	// TODO: Tell the client to do cmin, etc
 }
 
 func sendFiles(path, ip, target string) {
