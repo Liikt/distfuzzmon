@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"distfuzzmon/client/globals"
 	"distfuzzmon/client/types"
@@ -53,23 +52,15 @@ func BasicAPIRequest(path string, exit bool) {
 	}
 }
 
-// StartFuzzjob is the endpoint to start a new fuzzing job
-func StartFuzzjob(w http.ResponseWriter, r *http.Request) {
-
-}
-
-// StartClient will start the client activities
-func StartClient() {
-	ticker := time.NewTicker(30 * time.Minute)
-	for {
-		select {
-		case <-ticker.C:
-			// TODO: Stop the fuzzer
-			sendFilesToServer()
-		}
+// GetFuzzjob is the endpoint to start a new fuzzing job
+func GetFuzzjob(w http.ResponseWriter, r *http.Request) {
+	var newJob types.Fuzzjob
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&newJob)
+	if err != nil {
+		fmt.Println("[!] Couldn't decode the response from the server.", err)
+		return
 	}
-}
 
-func sendFilesToServer() {
-
+	startFuzzjob(newJob)
 }
