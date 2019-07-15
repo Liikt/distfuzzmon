@@ -2,6 +2,7 @@ Client:
     ☐ The client should be able to handle afl
         Later down the road has to have more options for other fuzzers
     ☐ Recieve fuzzjobs
+        ☐ handle all the fuzzing requests
     ☐ Send queues and crashes to the server
         crashes are possibly included in the queue as well?
         ☐ get all files
