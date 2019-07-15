@@ -2,3 +2,4 @@ ansible*
 Makefile
 .vscode/
 sync_dir/
+test*
