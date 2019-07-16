@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -45,6 +47,8 @@ func main() {
 		r.Post("/dropfile/{target}/{fuzzer}/", clientsync.DropFile)
 	})
 
+	go test()
+
 	fmt.Println("[+] Starting server on 31337")
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
@@ -54,4 +58,61 @@ func main() {
 		os.Exit(0)
 	}()
 	http.ListenAndServe(":31337", r)
+}
+
+func test() {
+	ips := []string{"192.168.0.6", "192.168.0.6"}
+	for _, ip := range ips {
+		fj := types.Fuzzjob{
+			FullCommand: "test",
+			Target:      "testfuzz",
+			Fuzzer:      "afl",
+			FuzzerCount: 3,
+			Seeds: []string{
+				"Cg==",
+				"aW5kZXgK",
+				"aW1hZ2VzCg==",
+				"ZG93bmxvYWQK",
+				"MjAwNgo=",
+				"bmV3cwo=",
+				"Y3JhY2sK",
+				"c2VyaWFsCg==",
+				"d2FyZXoK",
+				"ZnVsbAo=",
+				"MTIK",
+				"Y29udGFjdAo=",
+				"YWJvdXQK",
+				"c2VhcmNoCg==",
+				"c3BhY2VyCg==",
+				"cHJpdmFjeQo=",
+				"MTEK",
+				"bG9nbwo=",
+				"YmxvZwo=",
+				"bmV3Cg==",
+				"MTAK",
+				"Y2dpLWJpbgo=",
+				"ZmFxCg==",
+				"cnNzCg==",
+				"aG9tZQo=",
+				"aW1nCg==",
+				"ZGVmYXVsdAo=",
+				"MjAwNQo=",
+				"cHJvZHVjdHMK",
+				"c2l0ZW1hcAo=",
+			},
+		}
+
+		var clientResp types.ClientResponse
+		jsonValue, _ := json.Marshal(fj)
+		r, _ := http.Post(fmt.Sprintf("http://%s:31337/api/dropfile/%s/", ip, fj.Target), "application/json", bytes.NewBuffer(jsonValue))
+		decoder := json.NewDecoder(r.Body)
+		err := decoder.Decode(&clientResp)
+		if err != nil {
+			fmt.Println("[!] Error parsing body from response")
+			continue
+		}
+		if clientResp.Message != "Ok!" {
+			fmt.Println("[!] Client returned:", clientResp.Message)
+		}
+	}
 }
